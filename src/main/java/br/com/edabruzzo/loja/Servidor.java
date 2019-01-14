@@ -10,17 +10,24 @@ import org.glassfish.jersey.server.ResourceConfig;
 public class Servidor {
 
     public static void main(String[] args) throws IOException {
+        HttpServer server = inicializaServidor();
+        System.in.read();
+        server.stop();
+
+    }
+
+    public static HttpServer inicializaServidor() {
+
+        System.out.println("Iniciando servidor ... ");
         URI uri = URI.create("http://localhost:8080/");
         //expõe tudo que estiver no pacote abaixo como recurso webservice
         ResourceConfig config = new ResourceConfig().packages("br.com.edabruzzo.loja");
         //criando o próprio servidor com aplicação desktop, sem qualquer uso de servidor de aplicação ou servlet container
         HttpServer server = GrizzlyHttpServerFactory.createHttpServer(uri, config);
-        System.out.println("Servidor rodando");
-        //paramos o servidor quando o usuário apertar enter:
-        System.in.read();
-        server.stop();
-
+        System.out.println("Servidor rodando !!! ");
+        return server;
 
     }
+
 
 }
