@@ -7,6 +7,7 @@
 
 import br.com.edabruzzo.loja.Servidor;
 import br.com.edabruzzo.loja.modelo.Carrinho;
+import br.com.edabruzzo.loja.modelo.Projeto;
 import com.thoughtworks.xstream.XStream;
 import javax.ws.rs.client.Client;
 import javax.ws.rs.client.ClientBuilder;
@@ -46,7 +47,7 @@ public class ClienteTest {
     
     
     @Test
-    public void testaQueAConexaoComOServidorFunciona() {
+    public void testaQueBuscarUmCarrinhoTrazOCarrinhoEsperado() {
 
         /*
         Client client = ClientBuilder.newClient();
@@ -64,12 +65,15 @@ public class ClienteTest {
 
     
      @Test
-    public void testaPathProjetos() {
+    public void testaQueBuscarUmProjetoTrazOProjetoEsperado() {
 
         String conteudo = target.path("/projetos").request().get(String.class);
+        //System.out.println(conteudo);
+        //Assert.assertTrue(conteudo.contains("<nome>Minha loja"));
         System.out.println(conteudo);
-        Assert.assertTrue(conteudo.contains("<nome>Minha loja"));
-        
+        Projeto projeto = (Projeto) new XStream().fromXML(conteudo);
+        Assert.assertEquals(projeto.getNome(), "Minha loja");
+
     }
     
 }
