@@ -57,7 +57,14 @@ public class ClienteTest {
         System.out.println(conteudo);
 	*/
         
-        String conteudo = target.path("carrinhos").queryParam("id", 1l).request().get(String.class);
+        //Teste para QueryParam que no browser seria chada desta forma:
+        //localhost:8080/carrinhos?id=1L
+        //String conteudo = target.path("carrinhos").queryParam("id", 1l).request().get(String.class);
+        
+        //Teste para PathParam, passando o id como uri e não como parametro
+        //isto permite aproveitar o cache do browser
+        String conteudo = target.path("carrinhos/1").request().get(String.class);
+
         Carrinho carrinho = (Carrinho) new XStream().fromXML(conteudo);
         Assert.assertEquals(carrinho.getRua(), "Rua Vergueiro 3185, 8 andar");
 
@@ -66,8 +73,14 @@ public class ClienteTest {
     
      @Test
     public void testaQueBuscarUmProjetoTrazOProjetoEsperado() {
-
-        String conteudo = target.path("/projetos").queryParam("id", 1l).request().get(String.class);
+        //Teste para QueryParam que no browser seria chada desta forma:
+        //localhost:8080/projetos?id=1L
+        //String conteudo = target.path("/projetos").queryParam("id", 1l).request().get(String.class);
+        
+        //Teste para PathParam, passando o id como uri e não como parametro
+        //isto permite aproveitar o cache do browser
+        String conteudo = target.path("/projetos/1").request().get(String.class);
+        
         //System.out.println(conteudo);
         //Assert.assertTrue(conteudo.contains("<nome>Minha loja"));
         System.out.println(conteudo);
