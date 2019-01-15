@@ -5,6 +5,7 @@
  */
 package br.com.edabruzzo.loja.modelo;
 
+import com.google.gson.Gson;
 import com.thoughtworks.xstream.XStream;
 
 /**
@@ -52,6 +53,11 @@ public class Projeto {
             */
 		return new XStream().toXML(this);
 	}
+
+    public String toJSON() {
+    
+        return new Gson().toJson(this);
+    }
     
     
     

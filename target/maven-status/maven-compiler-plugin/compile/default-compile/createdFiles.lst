@@ -1,5 +1,8 @@
 br\com\edabruzzo\loja\modelo\Carrinho.class
+br\com\edabruzzo\loja\dao\ProjetoDAO.class
 br\com\edabruzzo\loja\modelo\Produto.class
 br\com\edabruzzo\loja\resource\CarrinhoResource.class
 br\com\edabruzzo\loja\Servidor.class
 br\com\edabruzzo\loja\dao\CarrinhoDAO.class
+br\com\edabruzzo\loja\modelo\Projeto.class
+br\com\edabruzzo\loja\resource\ProjetoResource.class
