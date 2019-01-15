@@ -88,7 +88,7 @@ public class ClienteTest {
     }
 
     @Test
-    public void testaPost() {
+    public void testaPostCarrinho() {
 
         Carrinho carrinho = new Carrinho();
         carrinho.adiciona(new Produto(314L, "Tablet", 999, 1));
@@ -103,4 +103,24 @@ public class ClienteTest {
 
     }
 
+    
+    
+    @Test
+    public void testaPostProjeto() {
+
+        Projeto projeto = new Projeto();
+        projeto.setAnoInicio(2015);
+        projeto.setNome("Viagens");
+        String xml = projeto.toXML();
+
+        Entity<String> entity = Entity.entity(xml, MediaType.APPLICATION_XML);
+
+        Response response = target.path("/projetos").request().post(entity);
+        Assert.assertEquals("<status>sucesso</status>", response.readEntity(String.class));
+
+    }
+
+    
+    
+    
 }

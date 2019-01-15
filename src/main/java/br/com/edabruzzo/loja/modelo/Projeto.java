@@ -58,6 +58,14 @@ public class Projeto {
     
         return new Gson().toJson(this);
     }
+
+    public void setNome(String nome) {
+        this.nome = nome;
+    }
+
+    public void setAnoInicio(int anoInicio) {
+        this.anoInicio = anoInicio;
+    }
     
     
     
