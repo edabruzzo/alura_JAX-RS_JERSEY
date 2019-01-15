@@ -99,7 +99,13 @@ public class ClienteTest {
         Entity<String> entity = Entity.entity(xml, MediaType.APPLICATION_XML);
 
         Response response = target.path("/carrinhos").request().post(entity);
-        Assert.assertEquals("<status>sucesso</status>", response.readEntity(String.class));
+        //Assert.assertEquals("<status>sucesso</status>", response.readEntity(String.class));
+        verificaResposta(response);
+        String location = response.getHeaderString("Location");
+        System.out.println(String.format("Location do post do carrinho: %s", location));
+        String conteudo = target.path(location.replace("http://localhost:8080/", " ").trim()).request().get(String.class);
+        Assert.assertTrue(conteudo.contains("Tablet"));
+
 
     }
 
@@ -114,13 +120,43 @@ public class ClienteTest {
         String xml = projeto.toXML();
 
         Entity<String> entity = Entity.entity(xml, MediaType.APPLICATION_XML);
-
         Response response = target.path("/projetos").request().post(entity);
-        Assert.assertEquals("<status>sucesso</status>", response.readEntity(String.class));
-
+        //Assert.assertEquals("<status>sucesso</status>", response.readEntity(String.class));
+        this.verificaResposta(response);
+        
     }
 
+    private void verificaResposta(Response response) {
     
+        System.out.println(response.toString());
+        System.out.println(String.format("HEADERS: %s", response.getHeaders().toString()));
+        Assert.assertEquals(201, response.getStatus());
     
+    }
+
+
+
+    @Test
+    public void testaRemocaoProduto() {
+
+        String location = "carrinhos/1/produtos/6237";
+        Response response = target.path(location).request().delete();
+        Assert.assertEquals(200, response.getStatus());
+        String conteudo = target.path("carrinhos/1").request().get(String.class);
+        System.out.println("CONTEÚDO QUE CHEGA APÓS DELETAR PRODUTO DO CARRINHO : "+ conteudo);
+        Assert.assertTrue(!conteudo.contains("6237"));
+
+    }
+    
+    @Test
+    public void testaRemocaoProjeto() {
+      
+        Response response_1 = target.path("projetos/1").request().delete();
+        Assert.assertEquals(200, response_1.getStatus());
+        Response response_2 = target.path("projetos/1").request().get();
+        Assert.assertEquals(500, response_2.getStatus());
+ 
+
+    }
     
 }
