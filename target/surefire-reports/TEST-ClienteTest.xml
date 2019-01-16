@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" ?>
-<testsuite tests="6" failures="0" name="ClienteTest" time="4.023" errors="0" skipped="0">
+<testsuite tests="7" failures="0" name="ClienteTest" time="4.168" errors="0" skipped="0">
   <properties>
     <property name="java.runtime.name" value="Java(TM) SE Runtime Environment"/>
     <property name="sun.boot.library.path" value="C:\Program Files\Java\jdk1.8.0_151\jre\bin"/>
@@ -61,10 +61,11 @@
     <property name="sun.desktop" value="windows"/>
     <property name="sun.cpu.isalist" value="amd64"/>
   </properties>
-  <testcase classname="ClienteTest" name="testaQueBuscarUmCarrinhoTrazOCarrinhoEsperado" time="2.288"/>
-  <testcase classname="ClienteTest" name="testaQueBuscarUmProjetoTrazOProjetoEsperado" time="0.217"/>
-  <testcase classname="ClienteTest" name="testaPostCarrinho" time="0.222"/>
-  <testcase classname="ClienteTest" name="testaPostProjeto" time="0.171"/>
-  <testcase classname="ClienteTest" name="testaRemocaoProduto" time="0.416"/>
-  <testcase classname="ClienteTest" name="testaRemocaoProjeto" time="0.127"/>
+  <testcase classname="ClienteTest" name="testaQueBuscarUmCarrinhoTrazOCarrinhoEsperado" time="2.247"/>
+  <testcase classname="ClienteTest" name="testaQueBuscarUmProjetoTrazOProjetoEsperado" time="0.281"/>
+  <testcase classname="ClienteTest" name="testaAtualizacaoCarrinhoAlteracaoProduto" time="0.25"/>
+  <testcase classname="ClienteTest" name="testaRemocaoProduto" time="0.203"/>
+  <testcase classname="ClienteTest" name="testaRemocaoProjeto" time="0.156"/>
+  <testcase classname="ClienteTest" name="testaPostProjeto" time="0.221"/>
+  <testcase classname="ClienteTest" name="testaPostCarrinho" time="0.187"/>
 </testsuite>

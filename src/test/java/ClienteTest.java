@@ -174,4 +174,39 @@ public class ClienteTest {
 
     }
 
+    
+    @Test
+    public void testaAtualizacaoCarrinhoAlteracaoProduto() {
+        
+        System.out.println(" *********** TESTANDO O PUT ****************");
+        
+        String conteudo = target.path("carrinhos/1").request().get(String.class);
+        System.out.println("CONTEÚDO ANTES DO PUT: ");
+        System.out.println(conteudo);
+        Carrinho carrinho = (Carrinho) new XStream().fromXML(conteudo);
+        System.out.println("CARRINHO: "+ carrinho.getProdutos().get(0).getId()
+                + " QUANTIDADE EXISTENTE ANTES DO PUT: "+carrinho.getProdutos().get(0).getQuantidade());
+        //Assert.assertTrue(carrinho.getProdutos().get(0).getQuantidade() == 1);
+        Produto produtoAlterado = carrinho.getProdutos().get(0);
+        produtoAlterado.setQuantidade(4);
+        
+        //preparando o PUT
+        String xml = produtoAlterado.toXML();
+        Entity<String> entity = Entity.entity(xml, MediaType.APPLICATION_XML);
+        Response response = target.path("/carrinhos/1/produtos/6237/quantidade").request().put(entity);
+        System.out.println("RESPONSE APÓS O PUT : "+response.toString());
+        //Assert.assertEquals(200, response.getStatus());
+        
+        //Conferindo se o PUT deu certo
+        System.out.println("QUANTIDADE EXISTENTE APÓS O PUT: "+carrinho.getProdutos().get(0).getQuantidade());
+        
+        Assert.assertEquals(200, response.getStatus());
+        Assert.assertTrue(carrinho.getProdutos().get(0).getQuantidade() == 4);
+        
+        System.out.println(" *********** FIM DO TESTE DO PUT ****************");
+
+
+    }
+    
+    
 }

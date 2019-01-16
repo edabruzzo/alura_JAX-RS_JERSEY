@@ -37,10 +37,10 @@ public class CarrinhoDAO {
 		return banco.remove(id);
 	}
 
-    public void removeProduto(long idCarrinho, long produtoId) {
-    
-            Carrinho carrinho = busca(idCarrinho);
-            carrinho.remove(produtoId);
+    public void removeProduto(long id, long produtoId) {
+            
+        Carrinho carrinho =  this.busca(id);
+        carrinho.remove(produtoId);
     }
 
 }
