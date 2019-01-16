@@ -16,6 +16,8 @@ import javax.ws.rs.client.WebTarget;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 import org.glassfish.grizzly.http.server.HttpServer;
+import org.glassfish.jersey.client.ClientConfig;
+import org.glassfish.jersey.filter.LoggingFilter;
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
@@ -29,8 +31,27 @@ public class ClienteTest {
 
     Servidor servidor = new Servidor();
     HttpServer server = null;
-    Client client = ClientBuilder.newClient();
+    //ao invés de criar um cliente padrão, eu vou criar a configuração de um cliente.
+    //https://cursos.alura.com.br/course/webservices-rest-com-jaxrs-e-jersey/task/4775
+    //Agora que eu tenho essa configuração do meu cliente eu vou registrar uma API de log, 
+    //que é o LoggingFilter.
+    /*
+    
+     */
+    Client client = this.configurarCliente();
+ 
     WebTarget target = client.target("http://localhost:8080");
+
+    
+    
+    public Client configurarCliente() {
+
+        ClientConfig config = new ClientConfig();
+        config.register(new LoggingFilter());
+
+        return ClientBuilder.newClient(config);
+
+    }
 
     //INICIA O SERVIDOR ANTES DE CADA TESTE
     @Before
@@ -106,11 +127,8 @@ public class ClienteTest {
         String conteudo = target.path(location.replace("http://localhost:8080/", " ").trim()).request().get(String.class);
         Assert.assertTrue(conteudo.contains("Tablet"));
 
-
     }
 
-    
-    
     @Test
     public void testaPostProjeto() {
 
@@ -123,18 +141,16 @@ public class ClienteTest {
         Response response = target.path("/projetos").request().post(entity);
         //Assert.assertEquals("<status>sucesso</status>", response.readEntity(String.class));
         this.verificaResposta(response);
-        
+
     }
 
     private void verificaResposta(Response response) {
-    
+
         System.out.println(response.toString());
         System.out.println(String.format("HEADERS: %s", response.getHeaders().toString()));
         Assert.assertEquals(201, response.getStatus());
-    
+
     }
-
-
 
     @Test
     public void testaRemocaoProduto() {
@@ -143,20 +159,19 @@ public class ClienteTest {
         Response response = target.path(location).request().delete();
         Assert.assertEquals(200, response.getStatus());
         String conteudo = target.path("carrinhos/1").request().get(String.class);
-        System.out.println("CONTEÚDO QUE CHEGA APÓS DELETAR PRODUTO DO CARRINHO : "+ conteudo);
+        System.out.println("CONTEÚDO QUE CHEGA APÓS DELETAR PRODUTO DO CARRINHO : " + conteudo);
         Assert.assertTrue(!conteudo.contains("6237"));
 
     }
-    
+
     @Test
     public void testaRemocaoProjeto() {
-      
+
         Response response_1 = target.path("projetos/1").request().delete();
         Assert.assertEquals(200, response_1.getStatus());
         Response response_2 = target.path("projetos/1").request().get();
         Assert.assertEquals(500, response_2.getStatus());
- 
 
     }
-    
+
 }
